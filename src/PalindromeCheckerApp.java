@@ -1,22 +1,52 @@
-import java.util.Deque;
-import java.util.LinkedList;
 public class PalindromeCheckerApp {
-    public static void main(String[] args) {
-        // UC7: Deque-Based Optimized Palindrome Checker
-        String original = "madam";
-        Deque<Character> deque = new LinkedList<>();
-        for (int i = 0; i < original.length(); i++) {
-            deque.addLast(original.charAt(i));
-        }
-        boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
+    static class Node {
+        char data;
+        Node next;
 
-            if (front != rear) {
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+    public static void main(String[] args) {
+        // UC8: Linked List Based Palindrome Checker
+        String original = "madam";
+        Node head = null;
+        Node tail = null;
+        for (int i = 0; i < original.length(); i++) {
+            Node newNode = new Node(original.charAt(i));
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node prev = null;
+        Node current = slow;
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        Node first = head;
+        Node second = prev;
+        boolean isPalindrome = true;
+        while (second != null) {
+            if (first.data != second.data) {
                 isPalindrome = false;
                 break;
             }
+            first = first.next;
+            second = second.next;
         }
         if (isPalindrome) {
             System.out.println(original + " is a Palindrome");
