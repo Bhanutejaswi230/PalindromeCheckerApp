@@ -1,20 +1,28 @@
 public class PalindromeCheckerApp {
-    public static void main(String[] args) {
-        // UC10: Case-Insensitive & Space-Ignored Palindrome
-        String original = "A man a plan a canal Panama";
-        String normalized = original.replaceAll("\\s+", "").toLowerCase();
-        boolean isPalindrome = true;
-        int n = normalized.length();
-        for (int i = 0; i < n / 2; i++) {
-            if (normalized.charAt(i) != normalized.charAt(n - 1 - i)) {
-                isPalindrome = false;
-                break;
+    // UC11: Object-Oriented Palindrome Service
+    static class PalindromeChecker {
+        public boolean checkPalindrome(String str) {
+            java.util.Stack<Character> stack = new java.util.Stack<>();
+            for (int i = 0; i < str.length(); i++) {
+                stack.push(str.charAt(i));
             }
+            for (int i = 0; i < str.length(); i++) {
+                if (str.charAt(i) != stack.pop()) {
+                    return false;
+                }
+            }
+
+            return true;
         }
-        if (isPalindrome) {
-            System.out.println("\"" + original + "\" is a Palindrome (ignoring spaces and case)");
+    }
+    public static void main(String[] args) {
+        String original = "madam";
+        PalindromeChecker checker = new PalindromeChecker();
+        boolean result = checker.checkPalindrome(original);
+        if (result) {
+            System.out.println(original + " is a Palindrome");
         } else {
-            System.out.println("\"" + original + "\" is NOT a Palindrome (ignoring spaces and case)");
+            System.out.println(original + " is NOT a Palindrome");
         }
     }
 }
