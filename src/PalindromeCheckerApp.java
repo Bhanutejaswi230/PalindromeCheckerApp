@@ -1,21 +1,20 @@
 public class PalindromeCheckerApp {
-    public static boolean isPalindrome(String str, int start, int end) {
-        if (start >= end) {
-            return true;
-        }
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-        return isPalindrome(str, start + 1, end - 1);
-    }
     public static void main(String[] args) {
-        // UC9: Recursive Palindrome Checker
-        String original = "madam";
-        boolean result = isPalindrome(original, 0, original.length() - 1);
-        if (result) {
-            System.out.println(original + " is a Palindrome");
+        // UC10: Case-Insensitive & Space-Ignored Palindrome
+        String original = "A man a plan a canal Panama";
+        String normalized = original.replaceAll("\\s+", "").toLowerCase();
+        boolean isPalindrome = true;
+        int n = normalized.length();
+        for (int i = 0; i < n / 2; i++) {
+            if (normalized.charAt(i) != normalized.charAt(n - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+        if (isPalindrome) {
+            System.out.println("\"" + original + "\" is a Palindrome (ignoring spaces and case)");
         } else {
-            System.out.println(original + " is NOT a Palindrome");
+            System.out.println("\"" + original + "\" is NOT a Palindrome (ignoring spaces and case)");
         }
     }
 }
